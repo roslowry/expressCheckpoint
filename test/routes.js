@@ -12,7 +12,7 @@ describe('Todo routes', function() {
   });
 
   describe('`/users` URI', function() {
-    xit('GET responds with an empty array at first', function() {
+    it('GET responds with an empty array at first', function() {
       // when we make requests to `/users` we will get back an empty array
       return supertest // supertest object lets us make & test HTTP req/res
         .get('/users') // makes an HTTP request: GET '/users'
@@ -23,7 +23,7 @@ describe('Todo routes', function() {
         });
     });
 
-    xit('GET responds with a person after a task has been added', function() {
+    it('GET responds with a person after a task has been added', function() {
       todos.add('zeke', { content: 'a task' });
       return supertest
         .get('/users')
@@ -34,7 +34,7 @@ describe('Todo routes', function() {
         });
     });
 
-    xit('GET responds with everyone who has tasks', function() {
+    it('GET responds with everyone who has tasks', function() {
       todos.add('zeke', { content: 'a task' });
       todos.add('omri', { content: 'some other task' });
       todos.add('gabe', { content: 'yet more tasks' });
@@ -51,7 +51,7 @@ describe('Todo routes', function() {
 
   describe('`/users/:name/tasks` URI', function() {
 
-    xit('GET lists all tasks for a specific user', function() {
+    it('GET lists all tasks for a specific user', function() {
       todos.add('dave', { content: 'task 1 for dave' });
       todos.add('joe', { content: 'task 1 for joe', complete: true });
       todos.add('joe', { content: 'task 2 for joe' });
@@ -68,7 +68,7 @@ describe('Todo routes', function() {
         });
     });
 
-    xit('POST creates a new task for that user & responds with the created task', function() {
+    it('POST creates a new task for that user & responds with the created task', function() {
       return supertest
         .post('/users/sarah/tasks')
         .send({ content: 'a new task for sarah'}) // the HTTP request body
@@ -87,7 +87,7 @@ describe('Todo routes', function() {
         });
     });
 
-    xit('POST respects pre-existing completion status', function() {
+    it('POST respects pre-existing completion status', function() {
       return supertest
         .post('/users/sarah/tasks')
         .send({ content: 'a new task for sarah', complete: true}) // the HTTP request body
