@@ -27,10 +27,15 @@ app.listen(2000, function(){console.log('hey!!!!')})
 
 app.use('/', router)
 
-app.use('/users/:name/', function(req, res, next) {
-	var person = req.params.name;
-	console.log(todos.roles[person])
-})
+// app.use('/users/:name/', function(req, res, next) {
+// 	var person = req.params.name;
+// 	console.log(todos.roles[person])
+// })
+
+// router.get('/users/:name')
+
+
+
 
 
 
