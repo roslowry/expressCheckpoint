@@ -19,7 +19,6 @@ router.get('/users/:name/tasks', function (req, res, next) {
 	var completeStatus;
 	var query = req.query;
 	if (Object.keys(req.query).length) {
-		console.log('req.query.status is as follows, yo: ', req.query.status)
 		if (req.query.status === 'active') completeStatus = false;
 		if (req.query.status === 'complete') completeStatus = true;
 		var conditionToMatch = req.query.status;
@@ -40,17 +39,17 @@ router.get('/users/:name/tasks', function (req, res, next) {
 	var tasks = todos.list(name);
 	if (!todos.list(name)) {
 		//// *** QUESTIO N: I'm really not sure what my 'end' invocation here did that made this test go from passing to failing.Shouldn't the use of conditional logic here be sufficient to ensure the test passes?
-		res.status(404).end();
+		return res.status(404).end();
 	} else {
 		res.json(tasks)
 	}
 	/// **** QUESTIO N: I really have no idea why the below resulted in a 'can't modify header twicce' error (or something like that). Doesn't the 'end' statement keep the thread from continuing to the following res.json (which, by the way, doesn't try to 'modify the head' as I believe the comment suggests. I'm confused!!)
-		var name = req.params.name;
-		var tasks = todos.list(name);
-		if (!todos.list(name)) {
-			res.status(404).end();
-		}
-		res.json(tasks)
+		// var name = req.params.name;
+		// var tasks = todos.list(name);
+		// if (!todos.list(name)) {
+		// 	return res.status(404).end();
+		// }
+		// res.json(tasks)
 })
 
 router.post('/users/:name/tasks', function (req, res, next) {
@@ -66,8 +65,7 @@ router.post('/users/:name/tasks', function (req, res, next) {
 		}
 	})
 	if (send400) {
-		res.status(400);
-		res.end()
+		return res.status(400).end()
 	} else {
 		todos.add(name, task);
 		var tasksByName = todos.list(name);
@@ -88,5 +86,5 @@ router.delete('/users/:name/tasks/:index', function (req, res, next) {
 	var name = req.params.name;
 	var idx = req.params.index;
 	todos.remove(name, idx);
-	res.status(204).end()
+	return res.status(204).end()
 })
